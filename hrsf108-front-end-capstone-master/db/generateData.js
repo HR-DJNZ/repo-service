@@ -1,5 +1,6 @@
 const randomName = require('node-random-name');
 const text = require('lorem-ipsum');
+const moment = require('moment');
 
 var randomInArray = (array) => {
   return array[Math.floor(Math.random()*array.length)];
@@ -30,22 +31,38 @@ const RNG = (min,max) => {
 }
 
 //random date generator
-const generateDate = () => {
-  return `${RNG(1998,2018)}-${RNG(1,12)}-${RNG(1,29)}`;
+const generateLongDate = () => {
+  let start = new Date(2016, 0, 1);
+  let end = new Date();
+  let date = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+  return moment(date).format('LL');
+}
+
+const generateShortDate = () => {
+  let start = new Date(2016, 0, 1);
+  let end = new Date();
+  let date = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+  return moment(date).format('L');
 }
 
 const createReview = () => {
   let user_id = RNG(1,100);
-  let recipe_id = RNG(1,100);
-  let rating = RNG(0,5);
-  let submit_date = generateDate();
+  let user_name = 'John Doe';
+  let recipe_id = 1;
+  let recipe_name = 'Mac & Cheese';
+  let rating = RNG(1,5);
+  let long_submit_date = generateLongDate();
+  let short_submit_date = generateShortDate();
   let review_text = text({count: 1, units:'sentence'});
   let likes = RNG(0,500);
   return {
     user_id,
+    user_name,
     recipe_id,
+    recipe_name,
     rating,
-    submit_date,
+    long_submit_date,
+    short_submit_date,
     review_text,
     likes  
   }
@@ -56,11 +73,15 @@ const createUser = () => {
   let image_url = 'https://vignette.wikia.nocookie.net/bojackhorseman/images/d/d2/BoJack_Horsemann.png/revision/latest?cb=20170924222700';
   let is_allstar = randomInArray(['true','false']);
   let followers = RNG(50,200);
+  let favorites = RNG(10,50);
+  let made = RNG(1,10);
   return {
     user_name,
     image_url,
     is_allstar,
-    followers
+    followers,
+    favorites,
+    made
   }
 }
 
@@ -70,19 +91,17 @@ const createUserRecipeJoin = () => {
   return {user_id, recipe_id};
 }
 
-<<<<<<< HEAD
 const createUserReviewJoin = () => {
-  let user_id = RNG(1,100);
-  let review_id = RNG(1,100);
+  let user_id = 1;
+  let review_id = 1;
   return {user_id, review_id};
 }
 
-=======
->>>>>>> 23e3995060fc931691af53fea543ab1b6cacdcfe
 module.exports = {
   createReview,
   createUser,
-  createUserRecipeJoin
+  createUserRecipeJoin,
+  createUserReviewJoin
 }
 
 /*

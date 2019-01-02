@@ -8,15 +8,20 @@ CREATE TABLE Users (
   image_url VARCHAR(255) NOT NULL,
   is_allstar ENUM ('true', 'false') NOT NULL,
   followers int NOT NULL,
+  favorites int NOT NULL,
+  made int NOT NULL,
   PRIMARY KEY (id)
 );
 		
 CREATE TABLE Reviews (
   id int NOT NULL AUTO_INCREMENT,
   user_id INT NOT NULL,
+  user_name TEXT NOT NULL,
   recipe_id int NOT NULL,
+  recipe_name TEXT NOT NULL,
   rating int NOT NULL,
-  submit_date DATE NOT NULL,
+  long_submit_date TEXT NOT NULL,
+  short_submit_date TEXT NOT NULL,
   review_text LONGTEXT NOT NULL,
   likes int NOT NULL,
   PRIMARY KEY (id)
@@ -36,7 +41,6 @@ CREATE TABLE user_favorited_recipe (
   PRIMARY KEY (id)
 );
 
-<<<<<<< HEAD
 CREATE TABLE user_liked_review (
   id int NOT NULL AUTO_INCREMENT,
   user_id int NOT NULL,
@@ -44,8 +48,6 @@ CREATE TABLE user_liked_review (
   PRIMARY KEY (id)
 );
 
-=======
->>>>>>> 23e3995060fc931691af53fea543ab1b6cacdcfe
 -- ALTER TABLE Reviews ADD FOREIGN KEY (user_id) REFERENCES Users (id);
 -- ALTER TABLE user_made_recipe ADD FOREIGN KEY (user_id) REFERENCES Users (id);
 -- ALTER TABLE user_made_recipe ADD FOREIGN KEY (recipe_id) REFERENCES Reviews (id);
